@@ -1,0 +1,16 @@
+{
+  "name": "ai-governance-assistant",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Conversational policy management for AI governance, with human-checkpointed agent workflows and an observability dashboard.",
+  "workspaces": ["packages/*", "apps/*"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "dev": "npm run dev --workspace=@aga/api & npm run dev --workspace=@aga/web",
+    "dev:api": "npm run dev --workspace=@aga/api",
+    "dev:web": "npm run dev --workspace=@aga/web",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "tsc --noEmit -p apps/api && tsc --noEmit -p apps/web",
+    "seed": "npm run seed --workspace=@aga/api"
+  }
+}
