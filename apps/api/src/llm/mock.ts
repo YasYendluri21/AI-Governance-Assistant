@@ -34,11 +34,16 @@ function matches(pairs: Array<[RegExp, string]>, request: string): string[] {
   return pairs.filter(([re]) => re.test(request)).map(([, value]) => value);
 }
 
-function titleCase(request: string): string {
-  const words = request.replace(/[^a-z0-9 ]/gi, ' ').split(/\s+/).filter(Boolean).slice(0, 7);
-  if (!words.length) return 'Untitled policy';
-  const first = words[0]!;
-  return [first.charAt(0).toUpperCase() + first.slice(1), ...words.slice(1)].join(' ');
+/**
+ * Name a policy after its first sentence rather than a fixed word count, which used to cut names
+ * mid-phrase. Long sentences are trimmed on a word boundary so the name still reads as a clause.
+ */
+function nameFrom(request: string): string {
+  const sentence = request.trim().split(/(?<=[.!?])\s/)[0]?.replace(/[.!?]+$/, '').trim() ?? '';
+  if (!sentence) return 'Untitled policy';
+
+  const name = sentence.length <= 80 ? sentence : `${sentence.slice(0, sentence.lastIndexOf(' ', 80))}…`;
+  return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
 export class MockProvider implements LlmProvider {
@@ -97,7 +102,7 @@ export class MockProvider implements LlmProvider {
     }
 
     return {
-      name: titleCase(request),
+      name: nameFrom(request),
       description: request.trim(),
       scope: {
         models: ['*'],

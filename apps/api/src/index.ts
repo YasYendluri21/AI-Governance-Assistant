@@ -166,7 +166,7 @@ app.get('/api/dashboard', (_req, res) => {
     byStatus,
     failuresByStep,
     latency: { p50, p95 },
-    recentEvents: events.recent(40),
+    recentEvents: events.recent(20),
     audit: audit.list(25)
   });
 });

@@ -17,6 +17,8 @@ keep a record of who decided what.
 Built with **React**, **TypeScript**, **Node.js**, the **Claude API**, and **AWS** (optional S3
 archival of audit records).
 
+![The console, with a run stopped at the human checkpoint](docs/console.png)
+
 ---
 
 ## Why the checkpoint is the point
@@ -101,6 +103,9 @@ run and a failed one are never confused in the dashboard.
 
 ### Observability — `apps/web/src/views/Dashboard.tsx`
 
+![Dashboard: run status, failures by step, latency and audit history](docs/dashboard.png)
+
+
 Run counts by status, **failures broken down by step**, p50/p95 run duration, the live event log,
 and full audit history. The per-step failure breakdown is the number worth watching: a total
 failure count tells you something is wrong, but failures concentrating in `validate` tells you
@@ -142,6 +147,8 @@ apps/web/
 
 **SQLite, not Postgres.** The repo should run in one command. The persistence layer is small and
 behind helpers, so swapping the driver touches one file.
+
+![The policy register, showing each rule and its rationale](docs/policies.png)
 
 **Policies are versioned by supersession.** Activating a policy whose name matches an active one
 archives the old version and increments — governance policies get amended, not duplicated, and the
