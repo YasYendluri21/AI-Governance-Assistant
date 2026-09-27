@@ -105,7 +105,6 @@ run and a failed one are never confused in the dashboard.
 
 ![Dashboard: run status, failures by step, latency and audit history](docs/dashboard.png)
 
-
 Run counts by status, **failures broken down by step**, p50/p95 run duration, the live event log,
 and full audit history. The per-step failure breakdown is the number worth watching: a total
 failure count tells you something is wrong, but failures concentrating in `validate` tells you
@@ -124,6 +123,13 @@ immutability; the object metadata documents the intent.
 Optional on purpose: with `AUDIT_ARCHIVE_BUCKET` unset the step is skipped and **the run's event log
 says so**. An unconfigured bucket is a deployment choice, not a governance failure — but silently
 not archiving would be.
+
+### The policy register — `apps/web/src/views/Policies.tsx`
+
+Every rule carries its own rationale, so a reviewer reading a policy months later sees why it exists
+rather than only what it does.
+
+![The policy register, showing each rule and its rationale](docs/policies.png)
 
 ---
 
@@ -147,8 +153,6 @@ apps/web/
 
 **SQLite, not Postgres.** The repo should run in one command. The persistence layer is small and
 behind helpers, so swapping the driver touches one file.
-
-![The policy register, showing each rule and its rationale](docs/policies.png)
 
 **Policies are versioned by supersession.** Activating a policy whose name matches an active one
 archives the old version and increments — governance policies get amended, not duplicated, and the
