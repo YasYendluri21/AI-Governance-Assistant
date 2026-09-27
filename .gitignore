@@ -3,6 +3,10 @@ dist/
 *.tsbuildinfo
 .env
 .env.local
-data/*.db
-data/*.db-journal
+# SQLite database and its WAL sidecars, wherever they sit in the workspace. These patterns are
+# unanchored so they match apps/api/data/ too, not just a data/ folder at the repo root.
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
 .DS_Store
